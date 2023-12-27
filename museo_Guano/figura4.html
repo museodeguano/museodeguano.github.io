@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cántaro Antropomorfo</title>
+
+    <link rel="stylesheet" href="./style3D.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="./img/core-img/logo.ico">
+</head>
+<body>
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fas fa-bars"></i>
+        </label>
+        <a href="#" class="enlace">
+            <img src="./img/core-img/logo.png" alt="" class="logo">
+        </a>
+        <ul>
+            <li><a class="active" href="./objetos.html">&#127968; Volver al menú de objetos</a></li>
+            <li><a href="./figura3.html">&#9198;&#65039; Ver figura anterior</a></li>
+            <li><a href="./figura5.html">Ver figura siguiente &#9197;&#65039;</a></li>
+        </ul>
+    </nav>
+    <section></section>
+    <br>
+    <h2 class="conten-text">CÁNTARO ANTROPOMORFO</h2>
+    <script type="module">
+        //importar biblioteca
+        import * as THREE from "./three.module.js";
+        import { OrbitControls } from "./OrbitControls.js";
+        import {GLTFLoader} from './GLTFLoader.js'
+        import {TransformControls} from './TransformControls.js'
+
+        let tControl;
+
+        //crear escena
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x2a3b4c);
+
+        //crear camara
+        const camera = new THREE.PerspectiveCamera(
+            75,
+            window.innerWidth/window.innerHeight
+        );
+
+        //render
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        let loaderdModel;
+        var loader = new GLTFLoader();
+        loader.load('assets/4-vasija1Final.glb' , function(glb){
+            loaderdModel = glb;
+            console.log(loaderdModel);
+            const root = glb.scene;
+            root.rotation.y = Math.PI / 8;
+            root.position.y = 0;
+            root.scale.set(1,1,1)
+            scene.add(root);
+        });
+            
+        camera.position.z = 2;
+        camera.position.x = 0;
+        camera.position.y = 0;
+
+        //controles de objeto
+        let controls = new OrbitControls(camera, renderer.domElement);
+
+        var light = new THREE.AmbientLight(0xff8888, 15);
+        light.position.set(1,15,1);
+        scene.add(light);
+
+        var pointColor = 0xff4444;
+        var pointLight = new THREE.PointLight(pointColor);
+        pointLight.distance = 100; // distancia de luz
+        pointLight.position.set (0, 0, 5); // posición
+        pointLight.intensity = 10; // intensidad de la luz
+        pointLight.visible = true; // ¿Es visible la luz puntual?
+        scene.add(pointLight);
+
+        //pantalla adaptativa//
+        window.addEventListener('resize', redimensionar);
+        function redimensionar(){
+            camera.aspect = window.innerWidth/window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.render(scene, camera);
+        }
+        
+        //limitaciones con zoom
+        controls.minDistance = 1;
+        controls.maxDistance = 6;
+
+        //cantidad de grados de rotacion - cantidad es divisible para PI
+        controls.maxPolarAngle = Math.PI /2;
+        controls.screemSpacePanning = true;
+
+        const animate = () =>{
+            if(loaderdModel){
+                //loaderdModel.scene.scale.set(1, 1, 1);
+                loaderdModel.scene.rotation.y += 0.0005;
+            }
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+    <div>
+        <br>
+        <!---------AUDIO---------->
+        <audio controls class="conten-audio">
+            <source src="./mp3/3. CántaroAntropomorfo.mp3" type="audio/mpeg">
+            <source src="./mp3/3. CántaroAntropomorfo.mp3" type="audio/ogg">
+            Tu navegador no es compatible con el audio.
+        </audio>
+        <br>
+    </div>
+    <br>
+</body>
+</html>

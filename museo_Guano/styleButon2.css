@@ -1,0 +1,61 @@
+@font-face {
+    font-family: adam;
+    src: url(Adam-Bold.ttf);
+  }
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: #ffffff;
+    min-height: 10vh;
+    font-family: adam;
+}
+
+.contenedor{
+    width: 1200px;
+    margin: auto;
+    padding: 5px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+h2{
+    font-size: 40px;
+    padding: 20px;
+    text-align: center;
+    color: #92191c;
+}
+.contenedor-botones{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(15rem, 1fr);
+    gap: 40px;
+}
+.contenedor-botones button{
+    display: inline-flex;
+    width: 100%;
+    height: 50px;
+    background-color: #92191c;
+    color: #ffffff;
+    font-family: adam;
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: .3s ease all;
+    border-radius: 10px;
+    border-color: #be0003;
+}
+
+.contenedor-botones button:hover{
+    background: #f0512b;
+    border-color: #f0512b;
+    color: #000000;
+}
